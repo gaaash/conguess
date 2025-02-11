@@ -1,7 +1,6 @@
 import random
 
-country_names = ["Afghanistan", "Albania", "Algeria"]
-draft_names = ["Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
+country_names = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
     "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
     "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia",
     "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo (Congo-Brazzaville)", "Costa Rica",
@@ -21,13 +20,11 @@ draft_names = ["Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia
     "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu",
     "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela",
     "Vietnam", "Yemen", "Zambia", "Zimbabwe"]
-def show_game(hint=False):
-    if hint:
-    
-        print(f"{goal[0]}",f"{goal[1]}",f"{empty_spot}"*(number_of_empyt_spots-1))    
 
-    else:
-        print(f"{goal[0]}",f"{empty_spot}"*number_of_empyt_spots)
+
+def show_game(goal, hited_words):
+        print(' '.join(goal[i] if hinted_words[i] else " _"for i in range(len(goal)) ))    
+
 def points():
     with open("points.txt", 'r') as point_file:
         point = point_file.readline()
@@ -43,8 +40,6 @@ def save_points(point):
 point = points()
 
 q = True
-hint = False
-empty_spot  = " _ "
 number_of_faileds = 0
 
 
@@ -57,16 +52,19 @@ menu = '''
 
 while q == True:
     goal = random.choice(country_names)
-    number_of_empyt_spots= len(goal)-1
     print(menu)
 
 
     vorodi = input("> ")
     match vorodi:
         case "1":
-            while q == True:                
-                show_game(hint)
+            hinted_words = [False for _ in range (len(goal)+1)]
+            
+            while (number_of_faileds) < len(goal)-1:
+                hinted_words[0] = True                
+                show_game(goal, hinted_words)
                 user_input= input("> ")           
+                
                 if user_input == goal or user_input == goal.lower():
                     print("Correct")
                     point += 1
@@ -74,11 +72,16 @@ while q == True:
                 elif user_input == "3": 
                     q = False
                 else:
-                    print("NOPE, Here is a hint")
-                    hint = True
+                    number_of_faileds += 1
+                    hinted_words[number_of_faileds] = True
+
+            print(f"You Lost the answer is {goal}")
         case "2":
+            
             print(f"**************** you earned {point} points ****************")
+        
         case "3":
+        
             q=False
             save_points(point)
 
