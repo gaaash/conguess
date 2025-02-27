@@ -1,4 +1,5 @@
 import random
+import os
 
 country_names = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
     "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
@@ -22,11 +23,11 @@ country_names = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anti
     "Vietnam", "Yemen", "Zambia", "Zimbabwe"]
 
 
-def show_game(goal, hited_words):
+def show_game(goal, hinted_words):
         print(' '.join(goal[i] if hinted_words[i] else " _"for i in range(len(goal)) ))    
 
 def points():
-    with open("points.txt", 'r') as point_file:
+    with open(f"C:\\Users\\{os.getlogin()}\\playground\\python\\country_name\\points.txt", 'r') as point_file:
         point = point_file.readline()
 
         return int(point)
