@@ -3,11 +3,10 @@ import os
 import colorama
 from data import easy, normal, hard, expert
 from pyfiglet import figlet_format
-import emoji
 
 
 def show_game(goal, hinted_words):
-        print(' '.join(goal[i] if hinted_words[i] else " _"for i in range(len(goal)) ) + "\t"+ f"{emoji.emojize(f":{goal}:")}")    
+        print(' '.join(goal[i] if hinted_words[i] else " _"for i in range(len(goal)) ))    
 
 def points():
     with open("points.txt", 'r') as point_file:
